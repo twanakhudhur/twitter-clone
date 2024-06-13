@@ -55,8 +55,6 @@ const Post = ({ post }) => {
 
   const handleLikePost = () => {};
 
-  console.log(post);
-
   return (
     <>
       <div className="flex gap-2 items-start p-4 border-b border-gray-700">
