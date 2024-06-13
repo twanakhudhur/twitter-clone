@@ -93,7 +93,12 @@ export const likeAndUnlike = async (req, res) => {
       //   Unlike post
       await Post.updateOne({ _id: postId }, { $pull: { likes: userId } });
       await User.updateOne({ _id: userId }, { $pull: { likedPosts: postId } });
-      res.status(200).json({ message: "Post unliked successfully!" });
+
+      const updatedLikes = post.likes.filter(
+        (id) => id.toString() !== userId.toString()
+      );
+
+      res.status(200).json(updatedLikes);
     } else {
       // Like post
       post.likes.push(userId);
@@ -107,7 +112,8 @@ export const likeAndUnlike = async (req, res) => {
       });
       await notification.save();
 
-      res.status(201).json({ message: "Post liked successfully!" });
+      const updatedLikes = post.likes;
+      res.status(200).json(updatedLikes);
     }
   } catch (error) {
     res
@@ -196,7 +202,7 @@ export const getFollowingPosts = async (req, res) => {
 export const getUserPosts = async (req, res) => {
   try {
     const { username } = req.params;
-    const user = await User.findOne({username});
+    const user = await User.findOne({ username });
     if (!user) return res.status(404).json({ message: "User not found!" });
     const posts = await Post.find({ user: user._id })
       .sort({ createdAt: -1 })
