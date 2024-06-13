@@ -36,7 +36,6 @@ const Post = ({ post }) => {
       toast.error(error.message);
     },
   });
-
   const { mutate: likePost, isPending: isLiking } = useMutation({
     mutationFn: async () => {
       try {
