@@ -7,7 +7,7 @@ import { useEffect } from "react";
 const Posts = ({ feedType, username, userId }) => {
   const getPostEndpoint = () => {
     switch (feedType) {
-      case "fotYou":
+      case "forYou":
         return "/api/posts/all";
       case "following":
         return "/api/posts/following";
